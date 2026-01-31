@@ -16,6 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class WFB1Cls {
+	
+	public static int second = 1000000000;
+	
     static class KeyListen
         extends KeyAdapter // Apologies, when i sent the code to myself it went
                            // double spaces because Gmail sucks.
@@ -30,7 +33,7 @@ public class WFB1Cls {
 
             if (ch == 'w' || ch == 'a' || ch == 's' || ch == 'd' || ch == 'p'
                 || ch == 'q' || ch == 'e' || ch == 'r' || ch == '0' || ch == '1'
-                || ch == '2' || ch == '3')
+                || ch == '2' || ch == '3' || ch == '4')
 
             {
                 actio.n += event.getKeyChar();
@@ -316,7 +319,7 @@ public class WFB1Cls {
 
     public static double dmgFind(double damage, boolean[][] collision,
         double[] wpnFalloff, double[] wpnPenetration, int weaponChoice,
-        int depth, int width) {
+        int depth, int width) { //TODO: This function is poorly implemented. Make an array index of weapons and their ID#
         // dmgFind(damage, collision, wpnFalloff, wpnPenetration, weaponChoice,
         // X, Y)
 
@@ -399,7 +402,7 @@ public class WFB1Cls {
 
         double[] wpnPenetration = new double[10];
 
-        wpnNames[0] = "Pistol";
+        wpnNames[0] = "Pistol"; 
 
         wpnDmg[0] = 20;
 
@@ -677,69 +680,42 @@ public class WFB1Cls {
             System.nanoTime(); // useful for AI pathfinding, makes enemies less
                                // likely to retrace steps
 
-        v1.setText(" ");
+        v1.setText("Choose your weapon (e to shoot)");
 
-        v2.setText(" ");
+        v2.setText("1 = Pistol");
 
-        v3.setText(" ");
+        v3.setText("2 = Shotgun");
 
-        v4.setText("Choose your weapon:");
+        v4.setText("3 = Hunting Rifle");
 
-        v5.setText(" ");
+        v5.setText("4 = Revolver");
 
-        v5.setText("0 = pistol");
+        v6.setText("1.  Good all-rounder with decent damage and manageable falloff.");
 
-        v6.setText("1 = shotgun");
+        v7.setText("2.  Devistating at close range, but weak when far away.");
 
-        v7.setText("2 = hunting rifle");
+        v8.setText("3.  Great damage, very long range, can pierce walls for 50% damage.");
 
-        v8.setText("3 = revolver");
+        v9.setText("4.  Sacrifices damage and range to pierce walls, maintaining 70% damage.");
 
-        v9.setText(" ");
-
-        v0.setText(" ");
+        v0.setText("Melee coming soon...");
 
         do
 
-        {
+        { // TODO: figure out why this breaks upon keyboard mashing, but WASD controls don't.
             Thread.sleep(1000);
 
             for (int x = 0; x < actio.n.length(); x++)
 
             {
-                if (actio.n.charAt(x) == '0')
-
-                {
-                    weaponChoice = 0;
-
+            	int choice = (actio.n.charAt(x) - 49);
+            	weaponChoice = (choice > -1 || choice < 4) ? choice : 10;
+            	if (weaponChoice != 10) {
+            		v1.setText("You have chosen " + wpnNames[choice]);
+            		Thread.sleep(4000);
                     break;
-                }
-
-                if (actio.n.charAt(x) == '1')
-
-                {
-                    weaponChoice = 1;
-
-                    break;
-                }
-
-                if (actio.n.charAt(x) == '2')
-
-                {
-                    weaponChoice = 2;
-
-                    break;
-                }
-
-                if (actio.n.charAt(x) == '3')
-
-                {
-                    weaponChoice = 3;
-
-                    break;
-                }
+            	}
             }
-
         } while (weaponChoice == 10);
 
         healthDsp.setForeground(Color.red);
@@ -797,14 +773,13 @@ public class WFB1Cls {
                 Thread.sleep(7000);
 
                 f.dispose();
+                
+                input0.close();
 
                 return;
             }
 
-            if (System.nanoTime() - playMClock
-                >= 250000000) // a painfully exacting way of saying that a
-                              // quarter second has passed. Or longer, since
-                              // computers are not as exact as we think
+            if (System.nanoTime() - playMClock >= second * 0.25)
 
             {
                 if ((Math.abs(coordX - enmX) < 2 && Math.abs(coordY - enmY) < 2)
@@ -1520,7 +1495,7 @@ public class WFB1Cls {
                 }
 
                 if (System.nanoTime() - AIMClock
-                    >= 480000000) // Beginning of AI movement
+                    >= second*0.48) // Beginning of AI movement
 
                 {
                     if (eHealth > 0)
@@ -1552,7 +1527,7 @@ public class WFB1Cls {
                     AIMClock = System.nanoTime();
                 }
 
-                if (System.nanoTime() - AIBadLocationClock >= 960000000)
+                if (System.nanoTime() - AIBadLocationClock >= second*0.96) //TODO: i changed this from 960000000 to second*0.96. Hopefully didn't break anything
 
                 {
                     LlocationX = enmX;
