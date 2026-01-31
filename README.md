@@ -5,3 +5,9 @@ This was a short solo project that I undertook as a capstone to one of my comput
 You are free to download everything any anything! This should compile and run on any computer that can run Java programs. If you have any questions about redistribution/liscensing/the like, contact me.
 
 *Keep in mind*, this project was completed without the use of classes, as that material had not been taught yet. I am working on a sequel in python that will be higher quality in this reguard.
+
+**CONTROLS:**
+- Standard WASD. Rapidly tapping is the fastest way to travel if you don't have key repeats (ttttttttttttthis) turned on
+- e to shoot
+- P to pause
+- 1-4 to decide weapon at start
