@@ -1,0 +1,7 @@
+/.metadata/
+# Ignore compiled Java binaries
+wendigosForestBeta1/bin/*.class
+
+# Ignore macOS system clutter
+.DS_Store
+**/.DS_Store
